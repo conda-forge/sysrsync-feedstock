@@ -6,21 +6,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sysrsync-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/sysrsync-{{ version }}.tar.gz
   sha256: 435f9eb620e68ffb18ca5cbad32b113396a432361c7722038eab65c97dd83bd5
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6,<4.0
+    - python {{ python_min }}
     - poetry-core
     - pip
   run:
-    - python >=3.6.0,<4.0.0
+    - python >={{ python_min }},<4.0.0
     - toml >=0.10.0,<0.11.0
 
 test:
@@ -30,6 +30,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/gchamon/sysrsync
